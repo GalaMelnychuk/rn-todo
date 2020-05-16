@@ -1,55 +1,37 @@
-import React, { useState} from "react";
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet, ImageBackground, View, TextInput } from "react-native";
 import TodoEditor from "./components/TodoEditor";
 import TodoList from "./components/TodoList";
-
-// import TodoList from './TodoList'
-
-
-
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Hello baby!!</Text>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
+import {styles} from "./components/styles"
 
 let maxId = 100;
 
-export default function App() {
+const image = {uri: "https://i.pinimg.com/236x/44/bc/55/44bc55c1d5154d81bacc6f87a73a779e.jpg"};
 
+export default function App() {
   const [todos, setTodos] = useState([]);
 
-  const addToDo = text => {
+  const addToDo = (text) => {
     const todo = {
       id: maxId++,
-      text
+      text,
     };
-    setTodos(prevTodos => [...prevTodos, todo]);
-    console.log('todo.text', todo)
+    setTodos((prevTodos) => [...prevTodos, todo]);
+    console.log("todo.text", todo);
   };
 
-  const onDeleteTodo = todoId => {
-    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== todoId));
+  const onDeleteTodo = (todoId) => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== todoId));
   };
 
   return (
-    
-    <>
-    
+    <ImageBackground source={image} style={styles.image}>
+    <View style={styles.container}>
+      
       <TodoEditor onSave={addToDo} />
-        <TodoList todos={todos} onDeleteTodo={onDeleteTodo} />
-    </>
+      <TodoList todos={todos} onDeleteTodo={onDeleteTodo} />
+     
+    </View>
+     </ImageBackground>
   );
-};
+}

@@ -1,10 +1,21 @@
 import React, { useState } from "react";
-import { TextInput, StyleSheet, Button, Keyboard, Alert } from "react-native";
+import {
+  TextInput,
+  ImageBackground,
+  View,
+  StyleSheet,
+  Text,
+  Keyboard,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
+
+import {styles} from "./styles";
 
 const TodoEditor = ({ onSave }) => {
   const [todoText, setTodoText] = useState("");
 
-  const submitHeandler = e => {
+  const submitHeandler = (e) => {
     onSave(todoText);
     setTodoText("");
   };
@@ -27,19 +38,17 @@ const TodoEditor = ({ onSave }) => {
   };
 
   return (
-    <>
+    <View>
       <TextInput
         autoCapitalize={"none"}
         autoCorrect={false}
         style={styles.input}
         onChangeText={setTodoText}
       />
-      <Button
-        onPress={() => alertSearch()}
-        title="Save"
-        color="#841584"
-      />
-    </>
+      <TouchableOpacity onPress={() => alertSearch()} style={styles.button}>
+        <Text style={styles.buttonTitle}>Save</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 //   return (
@@ -53,41 +62,3 @@ const TodoEditor = ({ onSave }) => {
 
 export default TodoEditor;
 
-
-const styles = StyleSheet.create({
-  button: {
-    marginHorizontal: 20,
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#a52a2a",
-  },
-  buttonTitle: {
-    ...Platform.select({
-      ios: {
-        color: "#f0f8ff",
-        fontSize: 12,
-      },
-      android: {
-        color: "grey",
-        fontSize: 20,
-      },
-      default: {
-        // other platforms, web for example
-        backgroundColor: "blue",
-      },
-    }),
-
-    textTransform: "uppercase",
-  },
-  input: {
-    marginTop: 80,
-    marginBottom: 40,
-    borderWidth: 1,
-    borderColor: "transparent",
-    borderBottomColor: "blue",
-    height: 40,
-    marginHorizontal: 20,
-    color: "red",
-  },
-});
