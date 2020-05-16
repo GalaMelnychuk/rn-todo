@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import {
   TextInput,
-  ImageBackground,
   View,
-  StyleSheet,
   Text,
   Keyboard,
   Alert,
@@ -38,7 +36,7 @@ const TodoEditor = ({ onSave }) => {
   };
 
   return (
-    <View>
+    <View style = {styles.editorContainer}>
       <TextInput
         autoCapitalize={"none"}
         autoCorrect={false}
@@ -46,7 +44,7 @@ const TodoEditor = ({ onSave }) => {
         onChangeText={setTodoText}
       />
       <TouchableOpacity onPress={() => alertSearch()} style={styles.button}>
-        <Text style={styles.buttonTitle}>Save</Text>
+        <Text style={styles.buttonTitle}>ADD</Text>
       </TouchableOpacity>
     </View>
   );

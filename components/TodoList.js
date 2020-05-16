@@ -8,30 +8,20 @@ import {
   TouchableOpacity,
   Alert, Button
 } from "react-native";
+import { styles } from "./styles";
 
 let maxId = 100;
 
 const TodoList = ({ todos, onDeleteTodo }) => {
-  // return (<ul>
-  //           {todos.map(({ id, text }) => (
-  //             <li key={maxId++}>
-  //               <span>{text}</span>
-  //               <button onClick={() => onDeleteTodo(id)}>Delete</button>
-  //             </li>
-  //           ))}
-  //         </ul>)
   return (
-    <View style={{ height: "80%", paddingTop: 50, paddingBottom: 50 }}>
+    <View style={styles.listContainer}>
       <FlatList
+      
         keyExtractor={todo => todo.id}
         data={todos}
         renderItem={({item})  => (
-          <View style={{ marginHorizontal: 10 }}>
-            <Text
-              style={{
-                marginBottom: 10
-              }}
-            >
+          <View style={styles.listTodos}>
+            <Text>
               {item.text}
             </Text>
             <Button
