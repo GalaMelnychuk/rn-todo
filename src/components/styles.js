@@ -5,19 +5,19 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   appCard: {
-    margin: 50
+    margin: 50,
   },
   editorContainer: {
     flexDirection: "row",
-    justifyContent:"flex-end",
+    justifyContent: "space-around",
     marginTop: 80,
     ...Platform.select({
       ios: {
-        paddingHorizontal: 30,
+        paddingHorizontal: 20,
         paddingVertical: 20,
       },
       android: {
-        paddingHorizontal: 5,
+        paddingHorizontal: 4,
       },
     }),
   },
@@ -36,20 +36,6 @@ export const styles = StyleSheet.create({
         marginHorizontal: 7,
       },
     }),
-  },
-  btnToCreateTask: {
-    backgroundColor: "blue",
-    color: "red",
-    marginHorizontal: 90,
-    height: 30,
-    borderRadius: 5,
-    textAlign: "center",
-  },
-  btnToCreateTaskText: {
-    color: "yellow",
-    fontWeight: "600",
-    fontSize: 16,
-    textAlign: "center",
   },
   btnDel: {
     backgroundColor: "red",
@@ -88,11 +74,19 @@ export const styles = StyleSheet.create({
     color: "black",
   },
   modalView: {
+    ...Platform.select({
+      ios: {
+        marginTop: 220,
+        marginBottom: 240,
+      },
+      android: {
+        marginTop: 100,
+        marginBottom: 200,
+      },
+    }),
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 220,
-    marginBottom: 240,
     marginHorizontal: 30,
     backgroundColor: "#d3d3d3",
     borderRadius: 20,
@@ -107,8 +101,11 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   modalInput: {
-    marginBottom: 120,
-    // marginVertical: 90,
+    ...Platform.select({
+      ios: { marginBottom: 120 },
+      android: { marginBottom: 50 },
+    }),
+
     padding: 10,
     width: "95%",
     height: "15%",
@@ -213,7 +210,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   btnAdd: {
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
     width: 80,
     height: 40,
     justifyContent: "center",

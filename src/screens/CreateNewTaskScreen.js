@@ -53,7 +53,7 @@ const CreateNewTaskScreen = ({ onSave, navigation }) => {
         onPress={() => navigation.navigate("Task List")}
       /> */}
       <View style={styles.imageWrap}>
-        <Image style={styles.imageQuote} source={require("../../assets/quote-rn.jpg")} />
+        <Image style={styles.imageQuote} source={require("../../assets/quote.jpg")} />
       </View>
     </>
   );
