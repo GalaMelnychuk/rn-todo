@@ -23,21 +23,9 @@ export const styles = StyleSheet.create({
     }),
   },
   listContainer: {
-   
     height: "80%",
     paddingHorizontal: 90,
     flexDirection: "row",
-    // ...Platform.select({
-    //   ios: {
-    //     paddingHorizontal: 30,
-    //     paddingVertical: 20,
-    //   },
-    //   android: {
-    //     paddingHorizontal: 5,
-    //     paddingVertical: 20,
-    //     marginHorizontal: 7,
-    //   },
-    // }),
   },
   todoItem: {
     paddingRight: 62,
@@ -175,9 +163,7 @@ export const styles = StyleSheet.create({
 
   todoDesc: {
     fontFamily: "cabin600",
-    // fontStyle: "italic",
     fontSize: 18,
-    // fontWeight: "600",
     color: "#191970",
   },
   imageWrap: {
@@ -215,23 +201,11 @@ export const styles = StyleSheet.create({
     backgroundColor: "#f0f8ff",
     borderColor: "#f5f5dc",
   },
-  // btnAddText: {
-  //   color: "#f0f8ff",
-  //   ...Platform.select({
-  //     ios: {
-  //       fontSize: 26,
-  //     },
-  //     android: {
-  //       fontSize: 26,
-  //     },
-  //     default: {
-  //       // other platforms, web for example
-  //       backgroundColor: "blue",
-  //     },
-  //   }),
-  //   textTransform: "uppercase",
-  //   fontWeight: "600",
-  // },
+  appIndicator: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
   input: {
     width: "75%",
     borderWidth: 1,

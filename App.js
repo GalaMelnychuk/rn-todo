@@ -4,11 +4,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
-import {fetchTodos} from './services/services'
+import { fetchTodos } from "./services/services";
 import { AppLoading } from "expo";
 
 import TaskListScreen from "./src/screens/TaskListScreen";
 import CreateNewTaskScreen from "./src/screens/CreateNewTaskScreen";
+import AppLoader from "./src/components/ui/AppLoader";
 
 async function loadApplication() {
   await Font.loadAsync({
@@ -21,13 +22,17 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
-  const [todos, setTodos] = useState([]);
-  
-  const loadTodos = async () => await fetchTodos().then(res => res.json()).then(data =>
-    {setTodos(Object.keys(data).map(key => ({...data[key], id: key}))); console.log('fetchApp', data)} );
+  const [todos, setTodos] = useState(null);
+
+  const loadTodos = async () =>
+    await fetchTodos()
+      .then((res) => res.json())
+      .then((data) => {
+        setTodos(Object.keys(data).map((key) => ({ ...data[key], id: key })));
+      });
 
   useEffect(() => {
-    loadTodos()
+    loadTodos();
   }, []);
 
   if (!isReady) {
@@ -41,17 +46,16 @@ export default function App() {
   }
 
   const addToDo = async (title) => {
-    const response = await fetch('https://rn-todo-3e4cd.firebaseio.com/todos.json', 
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({title}),
-    }
+    const response = await fetch(
+      "https://rn-todo-3e4cd.firebaseio.com/todos.json",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title }),
+      }
     );
-
     const data = await response.json();
-    console.log("hello", data);
-
+    
     const todo = {
       id: data.name,
       title: title,
@@ -100,9 +104,8 @@ export default function App() {
         }}
       >
         <Tab.Screen
-          
           options={{
-            tabBarIcon: ({ focused, size, color }) => (
+            tabBarIcon: ({ focused }) => (
               <Ionicons
                 name="ios-list-box"
                 size={focused ? 34 : 36}
@@ -111,14 +114,22 @@ export default function App() {
             ),
           }}
           name="List"
-          component={() => (<TaskListScreen todos={todos}
-          onUpdateTodoInGeneralState={updateTodo}
-          onDeleteTodo={onDeleteTodo} />)}
+          component={() =>
+            todos ? (
+              <TaskListScreen
+                todos={todos}
+                onUpdateTodoInGeneralState={updateTodo}
+                onDeleteTodo={onDeleteTodo}
+              />
+            ) : (
+              <AppLoader />
+            )
+          }
         />
 
         <Tab.Screen
           options={{
-            tabBarIcon: ({ focused, size, color }) => (
+            tabBarIcon: ({ focused }) => (
               <Ionicons
                 name="ios-add-circle"
                 size={focused ? 34 : 36}
@@ -127,9 +138,7 @@ export default function App() {
             ),
           }}
           name="Create"
-          component={() => (
-            <CreateNewTaskScreen onSave={addToDo} />
-          )}
+          component={() => <CreateNewTaskScreen onSave={addToDo} />}
         />
       </Tab.Navigator>
     </NavigationContainer>
