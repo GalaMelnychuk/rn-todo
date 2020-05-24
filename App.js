@@ -4,9 +4,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
-import { fetchTodos } from "./services/services";
 import { AppLoading } from "expo";
 
+import { fetchTodos } from "./services/services";
 import TaskListScreen from "./src/screens/TaskListScreen";
 import CreateNewTaskScreen from "./src/screens/CreateNewTaskScreen";
 import AppLoader from "./src/components/ui/AppLoader";
@@ -55,7 +55,7 @@ export default function App() {
       }
     );
     const data = await response.json();
-    
+
     const todo = {
       id: data.name,
       title: title,
@@ -63,13 +63,19 @@ export default function App() {
     setTodos((prevTodos) => [...prevTodos, todo]);
   };
 
-  const updateTodo = (id, text) => {
-    setTodos((prevState) =>
-      prevState.map((task) => {
-        if (task.id === id) {
-          task.title = text;
+  const updateTodo = async (id, title) => {
+    await fetch(`https://rn-todo-3e4cd.firebaseio.com/todos/${id}.json`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title }),
+    });
+
+    await setTodos((old) =>
+      old.map((todo) => {
+        if (todo.id === id) {
+          todo.title = title;
         }
-        return task;
+        return todo;
       })
     );
   };
@@ -86,10 +92,16 @@ export default function App() {
         },
         {
           text: "OK",
-          onPress: () =>
-            setTodos((prevTodos) =>
-              prevTodos.filter((todo) => todo.id !== todoId)
-            ),
+          onPress: async () => {
+            await fetch(
+              `https://rn-todo-3e4cd.firebaseio.com/todos/${todoId}.json`,
+              {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+              }
+            );
+            await setTodos((old) => old.filter((todo) => todo.id !== todoId));
+          },
         },
       ],
       { cancelable: false }

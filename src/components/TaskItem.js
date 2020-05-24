@@ -7,8 +7,8 @@ import AppCard from "../components/ui/AppCard";
 const TaskItem = ({ item, onDeleteTodo, onUpdateTodoInGeneralState }) => {
   const [showModal, setShowModal] = useState(false);
 
-  const saveHandler = (text) => {
-    onUpdateTodoInGeneralState(item.id, text);
+  const saveHandler = async (text) => {
+    await onUpdateTodoInGeneralState(item.id, text);
     setShowModal(false);
   };
   return (

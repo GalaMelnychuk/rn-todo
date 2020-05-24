@@ -14,7 +14,6 @@ const EditModal = ({ showModal, onCancelModal, value, onSaveUpdates }) => {
       );
     } else {
       onSaveUpdates(stateInModal);
-      onCancelModal();
     }
   };
 
