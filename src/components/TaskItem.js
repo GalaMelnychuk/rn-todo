@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, TouchableOpacity } from "react-native";
 import EditModal from "../components/EditModal";
-import { styles } from "../components/styles";
+import { styles } from "../styles/styles";
 import AppCard from "../components/ui/AppCard";
 
 const TaskItem = ({ item, onDeleteTodo, onUpdateTodoInGeneralState }) => {

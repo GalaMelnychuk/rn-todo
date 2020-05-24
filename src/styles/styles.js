@@ -1,4 +1,5 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform, Dimensions } from "react-native";
+
 
 export const styles = StyleSheet.create({
   container: {
@@ -22,52 +23,39 @@ export const styles = StyleSheet.create({
     }),
   },
   listContainer: {
+   
     height: "80%",
     paddingHorizontal: 90,
     flexDirection: "row",
-    ...Platform.select({
-      ios: {
-        paddingHorizontal: 30,
-        paddingVertical: 20,
-      },
-      android: {
-        paddingHorizontal: 5,
-        paddingVertical: 20,
-        marginHorizontal: 7,
-      },
-    }),
+    // ...Platform.select({
+    //   ios: {
+    //     paddingHorizontal: 30,
+    //     paddingVertical: 20,
+    //   },
+    //   android: {
+    //     paddingHorizontal: 5,
+    //     paddingVertical: 20,
+    //     marginHorizontal: 7,
+    //   },
+    // }),
+  },
+  todoItem: {
+    paddingRight: 62,
+    position: "relative",
+    
   },
   btnDel: {
     backgroundColor: "red",
-    textAlign: "center",
     justifyContent: "center",
     width: 60,
     height: 30,
     borderRadius: 6,
     position: "absolute",
     right: 0,
-    top: 2,
-    bottom: 2,
+    top: "-16%",
+    bottom: "0.5%",
   },
   btnDelText: {
-    fontWeight: "600",
-    fontSize: 16,
-    textAlign: "center",
-    color: "black",
-  },
-  btnEdit: {
-    backgroundColor: "green",
-    textAlign: "center",
-    justifyContent: "center",
-    width: 60,
-    height: 30,
-    borderRadius: 6,
-    position: "absolute",
-    right: 76,
-    top: 2,
-    bottom: 2,
-  },
-  btnEditText: {
     fontWeight: "600",
     fontSize: 16,
     textAlign: "center",
@@ -105,7 +93,8 @@ export const styles = StyleSheet.create({
       ios: { marginBottom: 120 },
       android: { marginBottom: 50 },
     }),
-
+    color: "#191970",
+    fontFamily: "cabin700",
     padding: 10,
     width: "95%",
     height: "15%",
@@ -125,7 +114,6 @@ export const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-around",
     opacity: 1,
-    // alignItems: "center",
   },
   modalBtnSave: {
     ...Platform.select({
@@ -186,9 +174,10 @@ export const styles = StyleSheet.create({
   },
 
   todoDesc: {
-    fontStyle: "italic",
+    fontFamily: "cabin600",
+    // fontStyle: "italic",
     fontSize: 18,
-    fontWeight: "600",
+    // fontWeight: "600",
     color: "#191970",
   },
   imageWrap: {
@@ -210,9 +199,8 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   btnAdd: {
-    // marginHorizontal: 20,
     width: 80,
-    height: 40,
+    padding: 10,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(220, 20, 60, 1)",
@@ -245,17 +233,15 @@ export const styles = StyleSheet.create({
   //   fontWeight: "600",
   // },
   input: {
-    width: 250,
-    height: 40,
+    width: "75%",
     borderWidth: 1,
     borderColor: "transparent",
     borderColor: "#5f9ea0",
-    height: 40,
     color: "#5f9ea0",
     fontWeight: "600",
     fontSize: 16,
     backgroundColor: "#fff8dc",
     borderRadius: 10,
-    paddingHorizontal: 6,
+    padding: 10,
   },
 });

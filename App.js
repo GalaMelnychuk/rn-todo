@@ -1,27 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import CreateNewTaskScreen from "./src/screens/CreateNewTaskScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+import * as Font from "expo-font";
+import {fetchTodos} from './services/services'
+import { AppLoading } from "expo";
+
 import TaskListScreen from "./src/screens/TaskListScreen";
+import CreateNewTaskScreen from "./src/screens/CreateNewTaskScreen";
 
-let maxId = 100;
+async function loadApplication() {
+  await Font.loadAsync({
+    cabin600: require("./assets/fonts/cabin-v14-latin-600.ttf"),
+    cabin700: require("./assets/fonts/cabin-v14-latin-700.ttf"),
+  });
+}
 
-const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [todos, setTodos] = useState([
-    { id: "1", title: "to learn React Native" },
-    { id: "2", title: "to run" },
-  ]);
+  const [isReady, setIsReady] = useState(false);
+  const [todos, setTodos] = useState([]);
+  
+  const loadTodos = async () => await fetchTodos().then(res => res.json()).then(data =>
+    {setTodos(Object.keys(data).map(key => ({...data[key], id: key}))); console.log('fetchApp', data)} );
 
-  const addToDo = (text) => {
+  useEffect(() => {
+    loadTodos()
+  }, []);
+
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={loadApplication}
+        onFinish={() => setIsReady(true)}
+        onError={console.warn}
+      />
+    );
+  }
+
+  const addToDo = async (title) => {
+    const response = await fetch('https://rn-todo-3e4cd.firebaseio.com/todos.json', 
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({title}),
+    }
+    );
+
+    const data = await response.json();
+    console.log("hello", data);
+
     const todo = {
-      id: maxId++,
-      title: text,
+      id: data.name,
+      title: title,
     };
     setTodos((prevTodos) => [...prevTodos, todo]);
   };
@@ -61,34 +94,26 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator initialRouteName="Task List"> */}
       <Tab.Navigator
         tabBarOptions={{
-          showLabel: false,
+          showLabel: true,
         }}
       >
-        {/* <Stack.Screen name="Create New Task">
-          {(props) => <CreateNewTaskScreen {...props} onSave={addToDo} />}
-        </Stack.Screen> */}
         <Tab.Screen
+          
           options={{
             tabBarIcon: ({ focused, size, color }) => (
               <Ionicons
                 name="ios-list-box"
-                size={focused ? 42 : 40}
-                color={focused ? "#ff1493" : "#808080"}
+                size={focused ? 34 : 36}
+                color={focused ? "#00ced1" : "#dcdcdc"}
               />
             ),
           }}
           name="List"
-          component={(props) => (
-            <TaskListScreen
-              {...props}
-              todos={todos}
-              onUpdateTodoInGeneralState={updateTodo}
-              onDeleteTodo={onDeleteTodo}
-            />
-          )}
+          component={() => (<TaskListScreen todos={todos}
+          onUpdateTodoInGeneralState={updateTodo}
+          onDeleteTodo={onDeleteTodo} />)}
         />
 
         <Tab.Screen
@@ -96,27 +121,16 @@ export default function App() {
             tabBarIcon: ({ focused, size, color }) => (
               <Ionicons
                 name="ios-add-circle"
-                size={focused ? 42 : 40}
-                color={focused ? "#ff1493" : "#808080"}
+                size={focused ? 34 : 36}
+                color={focused ? "#00ced1" : "#dcdcdc"}
               />
             ),
           }}
           name="Create"
-          component={(props) => (
-            <CreateNewTaskScreen {...props} onSave={addToDo} />
+          component={() => (
+            <CreateNewTaskScreen onSave={addToDo} />
           )}
         />
-
-        {/* <Stack.Screen name="Task List">
-          {(props) => (
-            <TaskListScreen
-              {...props}
-              todos={todos}
-              onUpdateTodoInGeneralState={updateTodo}
-              onDeleteTodo={onDeleteTodo}
-            />
-          
-        </Stack.Screen> */}
       </Tab.Navigator>
     </NavigationContainer>
   );

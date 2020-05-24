@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19003,
+  "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 1343,
-  "expoServerNgrokUrl": "https://t4-u2u.anonymous.rn-todo.exp.direct",
-  "packagerNgrokUrl": "https://packager.t4-u2u.anonymous.rn-todo.exp.direct",
-  "ngrokPid": 1361
+  "packagerPid": 8204,
+  "expoServerNgrokUrl": "https://9r-48i.anonymous.rn-todo.exp.direct",
+  "packagerNgrokUrl": "https://packager.9r-48i.anonymous.rn-todo.exp.direct",
+  "ngrokPid": 8235
 }

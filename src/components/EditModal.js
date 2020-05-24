@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Modal, TextInput, Button, View } from "react-native";
-import { styles } from "./styles";
+import { styles } from "../styles/styles";
 import AppBackgroundForModal from "./ui/AppBackgroundForModal";
 
 const EditModal = ({ showModal, onCancelModal, value, onSaveUpdates }) => {

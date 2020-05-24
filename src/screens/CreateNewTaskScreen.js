@@ -4,23 +4,21 @@ import {
   View,
   Text,
   Image,
-  Keyboard,
-  Button,
   Alert,
-  SafeAreaView,
-  TouchableOpacity,
   TouchableHighlight,
+  Keyboard
 } from "react-native";
 
-import { styles } from "../components/styles";
+import { styles } from "../styles/styles";
 
-const CreateNewTaskScreen = ({ onSave, navigation }) => {
+const CreateNewTaskScreen = ({ onSave }) => {
   const [todoText, setTodoText] = useState("");
 
   const submitHeandler = (e) => {
     if (todoText.trim()) {
       onSave(todoText);
       setTodoText("");
+      Keyboard.dismiss();
     } else {
       Alert.alert(
         `Please, enter you task. For example "to study React Native" :)`
@@ -48,10 +46,6 @@ const CreateNewTaskScreen = ({ onSave, navigation }) => {
           <Text style={styles.btnAddText}>ADD</Text>
         </TouchableHighlight>
       </View>
-      {/* <Button
-        title="Check Todo List"
-        onPress={() => navigation.navigate("Task List")}
-      /> */}
       <View style={styles.imageWrap}>
         <Image style={styles.imageQuote} source={require("../../assets/quote.jpg")} />
       </View>
